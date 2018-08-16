@@ -248,14 +248,6 @@
     "use-host-property-decorator": true,
     "use-life-cycle-interface": true,
     "use-output-property-decorator": true,
-    "use-pipe-transform-interface": true,
-    "rxjs-add": {
-      "options": [{
-        "allowElsewhere": true,
-        "allowUnused": true,
-        "file": "./src/rxjs.imports.ts"
-      }],
-      "severity": "error"
-    }
+    "use-pipe-transform-interface": true
   }
 }

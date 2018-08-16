@@ -14,8 +14,10 @@ export class UserReportService {
   addUser(newUser: User): Observable<void> {
     return new Observable<void>((observer) => {
       this.users.push(newUser);
-      observer.next();
-      observer.complete();
+      window.setTimeout(() => {
+        observer.next();
+        observer.complete();
+      }, 3000);
     });
   }
 

@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { FormState } from '../../../../shared/enums/form-state.enum';
-import { UserReportService } from '../user-report.service';
 
 @Component({
   selector: 'app-user-form',
@@ -11,17 +10,18 @@ import { UserReportService } from '../user-report.service';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit, OnDestroy {
+  @Output() userSaved: EventEmitter<User> = new EventEmitter<User>();
+
   formGroup: FormGroup;
   isFormValid: boolean;
 
-  @ViewChild('form') form;
+  @ViewChild('formElem') formElem: HTMLFormElement;
 
   private formState: FormState;
   private valueChangeSub: Subscription;
   private statusChangeSub: Subscription;
 
-  constructor(private formBuilder: FormBuilder,
-              private userReportService: UserReportService) {
+  constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -43,31 +43,27 @@ export class UserFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // get the new user object
+    // get the new user object from the form
     const newUser: User = this.formGroup.value as User;
 
-    // "add" the user
-    this.formState = FormState.SAVING;
-    this.userReportService.addUser(newUser)
-      .subscribe(
-        () => { // success
-          this.formState = FormState.SAVED;
-          this.resetForm();
-        },
-        (error: Error) => {
-          this.formState = FormState.ERROR;
-          const errorMessage: string = error.message;
-          // this is where you'd show a toastr of the error
-          // e.g. this.toastr.toastr.error(errorMessage);
-        }
-      );
+    // emit the new user
+    this.userSaved.emit(newUser);
+  }
+
+  setFormState(formState: FormState) {
+    this.formState = formState;
+    if (this.formState === FormState.SAVING) {
+      this.formGroup.disable();
+      return;
+    }
+    this.formGroup.enable();
   }
 
   resetForm(evt: Event = null): void {
-    this.form.resetForm();
-    // this.formGroup.markAsUntouched();
+    this.formElem.resetForm();
     this.formGroup.markAsUntouched();
-    if (!!evt) {
+    const hasEvent: boolean = !!evt;
+    if (hasEvent) {
       evt.preventDefault();
     }
   }
@@ -83,7 +79,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private getFormBuilderConfig(): AnyHash {
-    // TODO: Verify numbers
     const formBuilderConfig: AnyHash = {
       name: ['a', [Validators.required]],
       friends: ['b', [Validators.required]],
@@ -94,7 +89,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
           Validators.pattern('\^[0-9]+$'),
           Validators.maxLength(3)
         ])
-        ],
+      ],
       weight: ['2',
         Validators.compose([
           Validators.required,
