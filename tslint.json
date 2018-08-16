@@ -28,8 +28,7 @@
     "eofline": true,
     "forin": true,
     "import-blacklist": [
-      true,
-      "rxjs"
+      true
     ],
     "import-spacing": true,
     "indent": [
@@ -256,9 +255,6 @@
         "allowUnused": true,
         "file": "./src/rxjs.imports.ts"
       }],
-      "severity": "error"
-    },
-    "rxjs-no-wholesale": {
       "severity": "error"
     }
   }

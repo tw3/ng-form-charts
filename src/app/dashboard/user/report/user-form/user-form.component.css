@@ -1,0 +1,12 @@
+.input-card-header-image {
+  background-image: url('../../../../../assets/img/user.svg');
+  background-size: cover;
+}
+
+.input-form mat-form-field {
+  width: 100%;
+}
+
+mat-card-content > form {
+  margin-top: 20px;
+}

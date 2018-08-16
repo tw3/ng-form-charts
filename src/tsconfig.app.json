@@ -2,7 +2,11 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
+    "baseUrl": "./",
     "types": []
+  },
+  "angularCompilerOptions": {
+    "preserveWhitespaces": false
   },
   "exclude": [
     "src/test.ts",
