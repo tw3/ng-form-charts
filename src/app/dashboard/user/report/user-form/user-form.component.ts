@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { FormState } from '../../../../shared/enums/form-state.enum';
@@ -21,8 +21,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   private statusChangeSub: Subscription;
 
   constructor(private formBuilder: FormBuilder,
-              private userReportService: UserReportService,
-              private ref: ChangeDetectorRef) {
+              private userReportService: UserReportService) {
   }
 
   ngOnInit() {
@@ -64,26 +63,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
       );
   }
 
-  resetForm(): void {
-    // this.formGroup.reset();
-    // Object.keys(this.formGroup.controls).forEach(key => {
-    //   const c: AbstractControl = this.formGroup.controls[key];
-    //   console.log('c', c);
-    //   c.markAsPristine();
-    //   c.markAsUntouched();
-    //   c.updateValueAndValidity();
-    //   // c.setErrors(null);
-    // });
-    // this.formGroup.markAsUntouched();
-    // this.formGroup.markAsUntouched();
-    // this.formGroup.updateValueAndValidity();
-
+  resetForm(evt: Event = null): void {
     this.form.resetForm();
+    // this.formGroup.markAsUntouched();
     this.formGroup.markAsUntouched();
-
-    // this.destroyForm();
-    // this.buildForm();
-    // this.ref.markForCheck();
+    if (!!evt) {
+      evt.preventDefault();
+    }
   }
 
   private buildForm(): void {
@@ -99,9 +85,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
   private getFormBuilderConfig(): AnyHash {
     // TODO: Verify numbers
     const formBuilderConfig: AnyHash = {
-      name: ['', [Validators.required]],
-      friends: ['', [Validators.required]],
-      age: ['',
+      name: ['a', [Validators.required]],
+      friends: ['b', [Validators.required]],
+      age: ['1',
         Validators.compose([
           Validators.required,
           Validators.min(0),
@@ -109,7 +95,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
           Validators.maxLength(3)
         ])
         ],
-      weight: ['',
+      weight: ['2',
         Validators.compose([
           Validators.required,
           Validators.min(0),
@@ -125,7 +111,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private onFormGroupStatusChanged(status: string): void {
-    console.log('status', status);
     this.updateIsFormValid();
   }
 
