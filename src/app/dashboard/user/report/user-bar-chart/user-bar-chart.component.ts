@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-import { single, multi } from './dummy-data.model';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-bar-chart',
@@ -8,22 +6,23 @@ import { single, multi } from './dummy-data.model';
   styleUrls: ['./user-bar-chart.component.css']
 })
 export class UserBarChartComponent implements OnInit {
+  @Input() results: ChartDataPointModel;
+
   // options
   showXAxis = true;
   showYAxis = true;
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Country';
+  xAxisLabel = 'Age';
   showYAxisLabel = true;
-  yAxisLabel = 'Population';
+  yAxisLabel = 'Name';
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#3F51B5', '#FF4081', '#4E0250', '#3A3042', '#79B473']
   };
 
   constructor() {
-    Object.assign(this, {single, multi});
   }
 
   ngOnInit() {

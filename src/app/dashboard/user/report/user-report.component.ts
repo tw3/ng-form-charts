@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+import { FormState } from '../../../shared/enums/form-state.enum';
+import { NotificationService } from '../../../shared/notification.service';
+
+import { dummyResults } from './dummy-data';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserReportService } from './user-report.service';
-import { FormState } from '../../../shared/enums/form-state.enum';
 
 @Component({
   selector: 'app-user-report',
@@ -11,29 +14,40 @@ import { FormState } from '../../../shared/enums/form-state.enum';
 })
 export class UserReportComponent implements OnInit {
   @ViewChild('userForm') userForm: UserFormComponent;
+  results: ChartDataPointModel[];
 
-  constructor(private userReportService: UserReportService) {
+  constructor(private userReportService: UserReportService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
   }
 
+  get hasResults(): boolean {
+    return !!this.results;
+  }
+
   onUserSaved(newUser: User) {
-    console.log(newUser);
     this.userForm.setFormState(FormState.SAVING);
     this.userReportService.addUser(newUser)
       .subscribe(
-        () => { // success
-          // let the form know we are done
-          this.userForm.setFormState(FormState.SAVED);
-        },
-        (error: Error) => {
-          this.userForm.setFormState(FormState.ERROR);
-          const errorMessage: string = error.message;
-          // TODO: show the error message with a toastr message
-          // e.g. this.toastr.toastr.error(errorMessage);
-        }
+        this.handleAddUserSuccess.bind(this),
+        this.handleAddUserError.bind(this)
       );
+  }
+
+  private handleAddUserSuccess(): void {
+    // let the form know we are done
+    this.userForm.setFormState(FormState.SAVED);
+
+    // fetch the new results
+    this.results = dummyResults;
+  }
+
+  private handleAddUserError(error: Error): void {
+    // let the form of the error
+    const errorMessage: string = error.message;
+    this.userForm.setFormState(FormState.ERROR, errorMessage);
   }
 
 }

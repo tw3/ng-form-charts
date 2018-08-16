@@ -5,5 +5,7 @@
   (userSaved)="onUserSaved($event)">
 </app-user-form>
 
-<app-user-bar-chart>
+<app-user-bar-chart
+  *ngIf="hasResults"
+  [results]="results">
 </app-user-bar-chart>

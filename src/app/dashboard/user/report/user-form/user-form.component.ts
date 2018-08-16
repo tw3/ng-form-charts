@@ -52,7 +52,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.userSaved.emit(newUser);
   }
 
-  setFormState(formState: FormState) {
+  setFormState(formState: FormState, message?: string) {
     this.formState = formState;
 
     // enable/disable form
@@ -62,11 +62,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
     this.formGroup.enable();
 
-    // show a notification
+    // show a notification and reset if appropriate
     if (this.formState === FormState.SAVED) {
       this.notificationService.showSuccessToast('User saved');
+      this.resetForm();
     } else if (this.formState === FormState.ERROR) {
-      this.notificationService.showSuccessToast('Cannot save user');
+      if (!message) {
+        message = 'Cannot save user';
+      }
+      this.notificationService.showErrorToast(message);
     }
   }
 
