@@ -19,6 +19,7 @@ export class UserReportComponent implements OnInit {
   }
 
   onUserSaved(newUser: User) {
+    console.log(newUser);
     this.userForm.setFormState(FormState.SAVING);
     this.userReportService.addUser(newUser)
       .subscribe(

@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Subscription } from 'rxjs';
 
 import { FormState } from '../../../../shared/enums/form-state.enum';
+import { NotificationService } from '../../../../shared/notification.service';
 
 @Component({
   selector: 'app-user-form',
@@ -21,7 +22,8 @@ export class UserFormComponent implements OnInit, OnDestroy {
   private valueChangeSub: Subscription;
   private statusChangeSub: Subscription;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -52,14 +54,23 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   setFormState(formState: FormState) {
     this.formState = formState;
+
+    // enable/disable form
     if (this.formState === FormState.SAVING) {
       this.formGroup.disable();
       return;
     }
     this.formGroup.enable();
+
+    // show a notification
+    if (this.formState === FormState.SAVED) {
+      this.notificationService.showSuccessToast('User saved');
+    } else if (this.formState === FormState.ERROR) {
+      this.notificationService.showSuccessToast('Cannot save user');
+    }
   }
 
-  resetForm(evt: Event = null): void {
+  resetForm(evt?: Event): void {
     this.formElem.resetForm();
     this.formGroup.markAsUntouched();
     const hasEvent: boolean = !!evt;

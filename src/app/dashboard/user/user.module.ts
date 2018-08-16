@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppMaterialModule } from '../../core/material/app-material.module';
 
@@ -15,7 +16,8 @@ import { UserComponent } from './user.component';
     CommonModule,
     UserRoutingModule,
     AppMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxChartsModule
   ],
   declarations: [
     UserComponent,

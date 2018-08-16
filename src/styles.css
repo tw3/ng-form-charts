@@ -4,3 +4,25 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+mat-card {
+  margin-bottom: 25px;
+}
+
+.snackbar-success {
+  color: #fff;
+  background-color: #4caf50;
+}
+
+.snackbar-error {
+  color: #fff;
+  background-color: #d9534f;
+}
+
+.snackbar-warning {
+  color: #fff;
+  background-color: #f0ad4e;
+}
+
+.snackbar {
+}

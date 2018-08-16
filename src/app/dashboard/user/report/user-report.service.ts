@@ -17,7 +17,7 @@ export class UserReportService {
       window.setTimeout(() => {
         observer.next();
         observer.complete();
-      }, 3000);
+      }, 1000);
     });
   }
 
@@ -26,8 +26,10 @@ export class UserReportService {
 
   getUsers(): Observable<User[]> {
     return new Observable<User[]>((observer) => {
-      observer.next(this.users);
-      observer.complete();
+      window.setTimeout(() => {
+        observer.next(this.users);
+        observer.complete();
+      }, 1000);
     });
   }
 }

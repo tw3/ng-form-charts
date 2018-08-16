@@ -1,0 +1,9 @@
+.user-bar-chart-card-header-image {
+  background-image: url('../../../../../assets/img/chart.svg');
+  background-size: cover;
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px;
+}
