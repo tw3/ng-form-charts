@@ -5,11 +5,12 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppMaterialModule } from '../../core/material/app-material.module';
 
-import { HorizontalBarChartComponent } from './report/horizontal-bar-chart/horizontal-bar-chart.component';
+import { HorizontalBarChartComponent } from './report/chart-cards/horizontal-bar-chart/horizontal-bar-chart.component';
 import { UserFormComponent } from './report/user-form/user-form.component';
 import { UserReportComponent } from './report/user-report.component';
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
+import { BubbleChartComponent } from './report/chart-cards/bubble-chart/bubble-chart.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { UserComponent } from './user.component';
     UserComponent,
     UserReportComponent,
     UserFormComponent,
-    HorizontalBarChartComponent
+    HorizontalBarChartComponent,
+    BubbleChartComponent
   ]
 })
 export class UserModule {}

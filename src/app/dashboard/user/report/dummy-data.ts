@@ -1,4 +1,4 @@
-export let dummyResults: ChartDataPoint[] = [
+export let dummyResults: HorizontalBarChartDataPoint[] = [
   {
     'name': 'Paige',
     'value': 12

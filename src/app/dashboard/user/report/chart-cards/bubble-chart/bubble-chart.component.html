@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-xs-12">
 
-    <mat-card class="input-card">
+    <mat-card>
 
       <mat-card-header>
         <div
-          class="horizontal-bar-chart-card-header-image"
+          class="bubble-chart-card-header-image"
           mat-card-avatar>
         </div>
         <mat-card-title>
@@ -17,20 +17,18 @@
 
         <div class="chart-container">
 
-          <ngx-charts-bar-horizontal
-            [scheme]="colorScheme"
+          <ngx-charts-bubble-chart
             [results]="results"
-            [gradient]="gradient"
+            [scheme]="colorScheme"
+            [legend]="showLegend"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
-            [legend]="showLegend"
+            [showGridLines]="showGridLines"
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [showGridLines]="showGridLines"
-            (select)="onSelect($event)">
-          </ngx-charts-bar-horizontal>
+            [yAxisLabel]="yAxisLabel">
+          </ngx-charts-bubble-chart>
 
         </div>
 

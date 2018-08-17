@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { FormState } from '../../../shared/enums/form-state.enum';
 
@@ -10,15 +10,13 @@ import { UserReportService } from './user-report.service';
   templateUrl: './user-report.component.html',
   styleUrls: ['./user-report.component.css']
 })
-export class UserReportComponent implements OnInit {
+export class UserReportComponent {
   @ViewChild('userForm') userForm: UserFormComponent;
-  userAgeResults: ChartDataPoint[];
-  userWeightResults: ChartDataPoint[];
+  userAgeResults: HorizontalBarChartDataPoint[];
+  userWeightResults: HorizontalBarChartDataPoint[];
+  ageWeightResults: BubbleChartDataPoint[];
 
   constructor(private userReportService: UserReportService) {
-  }
-
-  ngOnInit() {
   }
 
   get hasUserAgeResults(): boolean {
@@ -28,6 +26,10 @@ export class UserReportComponent implements OnInit {
   get hasUserWeightResults(): boolean {
     return !!this.userWeightResults && this.userWeightResults.length > 0;
   }
+
+  get hasAgeWeightResults(): boolean {
+    return !!this.ageWeightResults && this.ageWeightResults.length > 0;
+}
 
   onUserSaved(newUser: User) {
     // let the form know we are saving
@@ -63,6 +65,7 @@ export class UserReportComponent implements OnInit {
     // convert users into results
     this.userAgeResults = [];
     this.userWeightResults = [];
+    this.ageWeightResults = [];
     users.forEach((user: User) => {
       this.userAgeResults.push({
         name: user.name,
@@ -72,6 +75,17 @@ export class UserReportComponent implements OnInit {
         name: user.name,
         value: user.weight
       });
+      this.ageWeightResults.push({
+        name: user.name,
+        series: [
+          {
+            name: '',
+            x: user.age,
+            y: user.weight
+          }
+        ]
+      });
+
     });
   }
 
