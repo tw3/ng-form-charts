@@ -12,6 +12,7 @@
 
         <mat-card-header>
           <div
+            (click)="addRandomUserData()"
             class="user-form-card-header-image"
             mat-card-avatar>
           </div>
@@ -32,30 +33,32 @@
                     placeholder="Name"/>
                 </mat-form-field>
               </div>
-              <div class="col-xs-12 col-sm-4">
-                <mat-form-field color="accent">
-                  <input
-                    formControlName="friends"
-                    matInput
-                    placeholder="Friends"/>
-                </mat-form-field>
-              </div>
-              <div class="col-xs-12 col-sm-4">
+              <div class="col-xs-6">
                 <mat-form-field color="accent">
                   <input
                     formControlName="age"
                     matInput
                     maxlength="3"
                     placeholder="Age"/>
+                  <span matSuffix>years old</span>
                 </mat-form-field>
               </div>
-              <div class="col-xs-12 col-sm-4">
+              <div class="col-xs-6">
                 <mat-form-field color="accent">
                   <input
                     formControlName="weight"
                     matInput
                     maxlength="3"
                     placeholder="Weight"/>
+                  <span matSuffix>lbs</span>
+                </mat-form-field>
+              </div>
+              <div class="col-xs-12">
+                <mat-form-field color="accent">
+                  <input
+                    formControlName="friends"
+                    matInput
+                    placeholder="Friends"/>
                 </mat-form-field>
               </div>
             </div>

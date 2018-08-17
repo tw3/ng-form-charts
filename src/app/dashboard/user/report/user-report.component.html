@@ -8,6 +8,13 @@
 </app-user-form>
 
 <app-user-bar-chart
-  *ngIf="hasResults"
-  [results]="results">
+  *ngIf="hasUserAgeResults"
+  title="User Ages"
+  [results]="userAgeResults">
+</app-user-bar-chart>
+
+<app-user-bar-chart
+  *ngIf="hasUserWeightResults"
+  title="User Weights"
+  [results]="userWeightResults">
 </app-user-bar-chart>

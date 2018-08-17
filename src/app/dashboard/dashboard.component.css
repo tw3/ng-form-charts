@@ -1,3 +1,7 @@
+.dashboard-container {
+  min-width: 400px;
+}
+
 mat-sidenav {
   width: 250px;
 }

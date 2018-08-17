@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { FormState } from '../../../shared/enums/form-state.enum';
-import { NotificationService } from '../../../shared/notification.service';
 
-import { dummyResults } from './dummy-data';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserReportService } from './user-report.service';
 
@@ -14,7 +12,8 @@ import { UserReportService } from './user-report.service';
 })
 export class UserReportComponent implements OnInit {
   @ViewChild('userForm') userForm: UserFormComponent;
-  results: ChartDataPoint[];
+  userAgeResults: ChartDataPoint[];
+  userWeightResults: ChartDataPoint[];
 
   constructor(private userReportService: UserReportService) {
   }
@@ -22,8 +21,12 @@ export class UserReportComponent implements OnInit {
   ngOnInit() {
   }
 
-  get hasResults(): boolean {
-    return !!this.results;
+  get hasUserAgeResults(): boolean {
+    return !!this.userAgeResults && this.userAgeResults.length > 0;
+  }
+
+  get hasUserWeightResults(): boolean {
+    return !!this.userWeightResults && this.userWeightResults.length > 0;
   }
 
   onUserSaved(newUser: User) {
@@ -48,8 +51,6 @@ export class UserReportComponent implements OnInit {
         this.handleGetUsersSuccess.bind(this),
         this.handleGetUsersError.bind(this)
       );
-
-    // this.results = dummyResults;
   }
 
   private handleAddUserError(error: Error): void {
@@ -60,12 +61,17 @@ export class UserReportComponent implements OnInit {
 
   private handleGetUsersSuccess(users: User[]): void {
     // convert users into results
-    this.results = users.map((user: User) => {
-      const newResult: ChartDataPoint = {
+    this.userAgeResults = [];
+    this.userWeightResults = [];
+    users.forEach((user: User) => {
+      this.userAgeResults.push({
         name: user.name,
         value: user.age
-      };
-      return newResult;
+      });
+      this.userWeightResults.push({
+        name: user.name,
+        value: user.weight
+      });
     });
   }
 

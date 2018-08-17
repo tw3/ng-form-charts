@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./user-bar-chart.component.css']
 })
 export class UserBarChartComponent implements OnInit {
+  @Input() title: string;
   @Input() results: ChartDataPoint;
 
   // options

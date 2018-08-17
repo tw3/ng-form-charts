@@ -40,6 +40,16 @@ export class UserFormComponent implements OnInit, OnDestroy {
   get isSaved(): boolean { return this.formState === FormState.SAVED; }
   get isError(): boolean { return this.formState === FormState.ERROR; }
 
+  addRandomUserData(): void {
+    this.formGroup.patchValue({
+      name: this.stringGen(),
+      friends: this.stringGen(),
+      age: this.getRandomInt(1, 100),
+      weight: this.getRandomInt(8, 400)
+    });
+    this.save();
+  }
+
   save(): void {
     if (!this.isFormValid) {
       return;
@@ -95,9 +105,9 @@ export class UserFormComponent implements OnInit, OnDestroy {
 
   private getFormBuilderConfig(): AnyHash {
     const formBuilderConfig: AnyHash = {
-      name: ['a', [Validators.required]],
-      friends: ['b', [Validators.required]],
-      age: ['1',
+      name: ['', [Validators.required]],
+      friends: ['', [Validators.required]],
+      age: ['',
         Validators.compose([
           Validators.required,
           Validators.min(0),
@@ -105,7 +115,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
           Validators.maxLength(3)
         ])
       ],
-      weight: ['2',
+      weight: ['',
         Validators.compose([
           Validators.required,
           Validators.min(0),
@@ -140,6 +150,27 @@ export class UserFormComponent implements OnInit, OnDestroy {
       this.statusChangeSub.unsubscribe();
     }
     this.formGroup = null;
+  }
+
+  private getRandomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  private stringGen(): string {
+    const len: number = this.getRandomInt(3, 8);
+    let text: string = '';
+
+    const charset: string = 'abcdefghijklmnopqrstuvwxyz';
+
+    for (let i: number = 0; i < len; i++) {
+      let randomChar: string = charset.charAt(Math.floor(Math.random() * charset.length));
+      if (i === 0) {
+        randomChar = randomChar.toUpperCase();
+      }
+      text += randomChar;
+    }
+
+    return text;
   }
 
 }
