@@ -9,24 +9,24 @@
 
 <app-horizontal-bar-chart
   *ngIf="hasUserAgeResults"
+  [results]="userAgeResults"
   title="User Ages"
   xAxisLabel="Age"
-  yAxisLabel="Name"
-  [results]="userAgeResults">
+  yAxisLabel="Name">
 </app-horizontal-bar-chart>
 
 <app-horizontal-bar-chart
   *ngIf="hasUserWeightResults"
+  [results]="userWeightResults"
   title="User Weights"
   xAxisLabel="Weight"
-  yAxisLabel="Name"
-  [results]="userWeightResults">
+  yAxisLabel="Name">
 </app-horizontal-bar-chart>
 
 <app-bubble-chart
   *ngIf="hasAgeWeightResults"
+  [results]="ageWeightResults"
   title="Age vs Weight"
   xAxisLabel="Age"
-  yAxisLabel="Weight"
-  [results]="ageWeightResults">
+  yAxisLabel="Weight">
 </app-bubble-chart>
