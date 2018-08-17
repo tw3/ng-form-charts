@@ -1,4 +1,4 @@
-interface ChartDataPointModel {
+interface ChartDataPoint {
   name: string;
   value: number;
 }

@@ -13,23 +13,39 @@ export class UserReportService {
 
   addUser(newUser: User): Observable<void> {
     return new Observable<void>((observer) => {
-      this.users.push(newUser);
+      // this is where you'd normally have an httpClient.get() call, this timeout simulates it
       window.setTimeout(() => {
+        const isDuplicate: boolean = this.isDuplicateUser(newUser);
+        if (isDuplicate) {
+          const message: string = `There is already a user with the name of '${newUser.name}'`;
+          const error: Error = new Error(message);
+          observer.error(error);
+          return;
+        }
+        this.users.push(newUser);
         observer.next();
         observer.complete();
       }, 1000);
     });
   }
 
-  // is this is a real app you'd have the other CRUD operations here
+  // if this was a real app you'd have the other CRUD operations here
   // i.e. deleteUser(id), editUser(id), etc
 
   getUsers(): Observable<User[]> {
     return new Observable<User[]>((observer) => {
+      // this is where you'd normally have an httpClient.get() call, this timeout simulates it
       window.setTimeout(() => {
         observer.next(this.users);
         observer.complete();
       }, 1000);
     });
+  }
+
+  private isDuplicateUser(newUser: User): boolean {
+    const isDuplicate: boolean = this.users.some((savedUser: User) => {
+      return (savedUser.name === newUser.name);
+    });
+    return isDuplicate;
   }
 }

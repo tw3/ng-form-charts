@@ -14,10 +14,9 @@ import { UserReportService } from './user-report.service';
 })
 export class UserReportComponent implements OnInit {
   @ViewChild('userForm') userForm: UserFormComponent;
-  results: ChartDataPointModel[];
+  results: ChartDataPoint[];
 
-  constructor(private userReportService: UserReportService,
-              private notificationService: NotificationService) {
+  constructor(private userReportService: UserReportService) {
   }
 
   ngOnInit() {
@@ -28,7 +27,10 @@ export class UserReportComponent implements OnInit {
   }
 
   onUserSaved(newUser: User) {
+    // let the form know we are saving
     this.userForm.setFormState(FormState.SAVING);
+
+    // add the user
     this.userReportService.addUser(newUser)
       .subscribe(
         this.handleAddUserSuccess.bind(this),
@@ -37,14 +39,37 @@ export class UserReportComponent implements OnInit {
   }
 
   private handleAddUserSuccess(): void {
-    // let the form know we are done
+    // let the form know the user is saved
     this.userForm.setFormState(FormState.SAVED);
 
-    // fetch the new results
-    this.results = dummyResults;
+    // get all of the users
+    this.userReportService.getUsers()
+      .subscribe(
+        this.handleGetUsersSuccess.bind(this),
+        this.handleGetUsersError.bind(this)
+      );
+
+    // this.results = dummyResults;
   }
 
   private handleAddUserError(error: Error): void {
+    // let the form of the error
+    const errorMessage: string = error.message;
+    this.userForm.setFormState(FormState.ERROR, errorMessage);
+  }
+
+  private handleGetUsersSuccess(users: User[]): void {
+    // convert users into results
+    this.results = users.map((user: User) => {
+      const newResult: ChartDataPoint = {
+        name: user.name,
+        value: user.age
+      };
+      return newResult;
+    });
+  }
+
+  private handleGetUsersError(error: Error): void {
     // let the form of the error
     const errorMessage: string = error.message;
     this.userForm.setFormState(FormState.ERROR, errorMessage);

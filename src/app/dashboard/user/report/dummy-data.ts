@@ -1,4 +1,4 @@
-export let dummyResults: ChartDataPointModel[] = [
+export let dummyResults: ChartDataPoint[] = [
   {
     'name': 'Paige',
     'value': 12
