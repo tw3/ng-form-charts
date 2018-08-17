@@ -34,8 +34,8 @@ export class NotificationService {
 
   private getDefaultSnackBarConfig(): MatSnackBarConfig {
     const snackBarConfig: MatSnackBarConfig = new MatSnackBarConfig();
-    snackBarConfig.verticalPosition = 'top';
-    snackBarConfig.horizontalPosition = 'right';
+    snackBarConfig.verticalPosition = 'bottom';
+    snackBarConfig.horizontalPosition = 'left';
     snackBarConfig.duration = 3000;
     return snackBarConfig;
   }
