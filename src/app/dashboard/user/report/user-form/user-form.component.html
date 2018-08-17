@@ -11,8 +11,13 @@
       <mat-card class="input-card">
 
         <mat-card-header>
-          <div mat-card-avatar class="user-form-card-header-image"></div>
-          <mat-card-title>New User Details</mat-card-title>
+          <div
+            class="user-form-card-header-image"
+            mat-card-avatar>
+          </div>
+          <mat-card-title>
+            New User Details
+          </mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
@@ -22,35 +27,35 @@
               <div class="col-xs-12">
                 <mat-form-field color="accent">
                   <input
+                    formControlName="name"
                     matInput
-                    placeholder="Name"
-                    formControlName="name"/>
+                    placeholder="Name"/>
                 </mat-form-field>
               </div>
               <div class="col-xs-12 col-sm-4">
                 <mat-form-field color="accent">
                   <input
+                    formControlName="friends"
                     matInput
-                    placeholder="Friends"
-                    formControlName="friends"/>
+                    placeholder="Friends"/>
                 </mat-form-field>
               </div>
               <div class="col-xs-12 col-sm-4">
                 <mat-form-field color="accent">
                   <input
-                    matInput
-                    placeholder="Age"
                     formControlName="age"
-                    maxlength="3"/>
+                    matInput
+                    maxlength="3"
+                    placeholder="Age"/>
                 </mat-form-field>
               </div>
               <div class="col-xs-12 col-sm-4">
                 <mat-form-field color="accent">
                   <input
-                    matInput
-                    placeholder="Weight"
                     formControlName="weight"
-                    maxlength="3"/>
+                    matInput
+                    maxlength="3"
+                    placeholder="Weight"/>
                 </mat-form-field>
               </div>
             </div>
@@ -61,8 +66,8 @@
         <mat-card-actions>
           <button
             [disabled]="!isFormValid || isSaving"
-            mat-raised-button
-            color="primary">
+            color="primary"
+            mat-raised-button>
             SAVE
           </button>
           <button
