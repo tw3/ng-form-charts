@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-user-bar-chart',
-  templateUrl: './user-bar-chart.component.html',
-  styleUrls: ['./user-bar-chart.component.css']
+  selector: 'app-horizontal-bar-chart',
+  templateUrl: './horizontal-bar-chart.component.html',
+  styleUrls: ['./horizontal-bar-chart.component.css']
 })
-export class UserBarChartComponent implements OnInit {
+export class HorizontalBarChartComponent implements OnInit {
   @Input() title: string;
   @Input() results: ChartDataPoint;
 
