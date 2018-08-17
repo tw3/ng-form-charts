@@ -75,6 +75,7 @@ export class UserReportComponent {
         name: user.name,
         value: user.weight
       });
+      // TODO: Set the radius as the number of friends
       this.ageWeightResults.push({
         name: user.name,
         series: [
