@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
+import { UserModule } from './user/user.module';
 
 const routes: Routes = [{
   path: '',
@@ -14,7 +15,8 @@ const routes: Routes = [{
     },
     {
       path: 'user',
-      loadChildren: 'app/dashboard/user/user.module#UserModule' // example of lazy-loading
+      loadChildren: () => UserModule,
+      // loadChildren: 'app/dashboard/user/user.module#UserModule' // example of lazy-loading
     }
    ]
 }];
