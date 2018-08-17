@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import { chartColorScheme } from '../chart-color-scheme';
+
 @Component({
   selector: 'app-horizontal-bar-chart',
   templateUrl: './horizontal-bar-chart.component.html',
@@ -20,7 +22,5 @@ export class HorizontalBarChartComponent {
   showYAxisLabel = true;
   showGridLines = true;
 
-  colorScheme = {
-    domain: ['#3F51B5', '#FF4081', '#4E0250', '#3A3042', '#79B473']
-  };
+  colorScheme = chartColorScheme;
 }
