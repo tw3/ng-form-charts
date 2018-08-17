@@ -31,7 +31,7 @@ export class UserReportComponent {
     return !!this.ageWeightResults && this.ageWeightResults.length > 0;
 }
 
-  onUserSaved(newUser: User) {
+  onUserSaved(newUser: User): void {
     // let the form know we are saving
     this.userForm.setFormState(FormState.SAVING);
 

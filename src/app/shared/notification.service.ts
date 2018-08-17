@@ -41,7 +41,7 @@ export class NotificationService {
   }
 
   private showToast(message: string, actionButtonLabel: string, actionButtonFn: (value: void) => void,
-                    snackBarConfig: MatSnackBarConfig) {
+                    snackBarConfig: MatSnackBarConfig): void {
     const snackBarRef: MatSnackBarRef<SimpleSnackBar> =
       this.snackBar.open(message, actionButtonLabel, snackBarConfig);
 

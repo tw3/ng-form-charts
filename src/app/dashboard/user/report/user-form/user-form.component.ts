@@ -26,7 +26,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
               private notificationService: NotificationService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formState = FormState.READY;
     this.buildForm();
   }
@@ -62,7 +62,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.userSaved.emit(newUser);
   }
 
-  setFormState(formState: FormState, message?: string) {
+  setFormState(formState: FormState, message?: string): void {
     this.formState = formState;
 
     // enable/disable form
