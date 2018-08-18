@@ -4,6 +4,7 @@ import { FormState } from '../../../shared/enums/form-state.enum';
 
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserReportService } from './user-report.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-report',
@@ -29,6 +30,10 @@ export class UserReportComponent {
 
   get hasAgeWeightResults(): boolean {
     return !!this.ageWeightResults && this.ageWeightResults.length > 0;
+  }
+
+  get allFriends(): Observable<User[]> {
+    return this.userReportService.getUsers();
   }
 
   onUserSaved(newUser: User): void {

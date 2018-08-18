@@ -22,7 +22,17 @@ export class UserReportService {
           observer.error(error);
           return;
         }
+        // Add new user to list of users
         this.users.push(newUser);
+        // Add new user to the friends list for his friends
+        // This of course assumes that friendships are always bi-directional
+        // which is not always the case in reality haha
+        newUser.friends.forEach((userFriend: string) => {
+          const friendUser: User = this.getUserByName(userFriend);
+          friendUser.friends.push(newUser.name);
+        });
+        debugger;
+        // Trigger next() and complete()
         observer.next();
         observer.complete();
       }, 1000);
@@ -47,5 +57,10 @@ export class UserReportService {
       return (savedUser.name === newUser.name);
     });
     return isDuplicate;
+  }
+
+  private getUserByName(name: string): User {
+    const matchingUser: User = this.users.find((user: User): boolean => user.name === name);
+    return matchingUser;
   }
 }

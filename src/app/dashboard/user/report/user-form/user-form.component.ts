@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Observable, Subscription } from 'rxjs';
@@ -8,13 +8,20 @@ import { FormState } from '../../../../shared/enums/form-state.enum';
 import { NotificationService } from '../../../../shared/notification.service';
 import { getRandomInt, stringGen } from '../../../../shared/util/util_functions';
 
+interface FormUser {
+  name: string;
+  age: number;
+  weight: number;
+  friendInput: string;
+}
+
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit, OnDestroy {
-  allFriends: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  @Input() allFriends: string[];
   @Output() userSaved: EventEmitter<User> = new EventEmitter<User>();
 
   formGroup: FormGroup;
@@ -51,7 +58,14 @@ export class UserFormComponent implements OnInit, OnDestroy {
     return this.formState === FormState.ERROR;
   }
 
+  get friendsExist(): boolean {
+    return (this.allFriends != null) && this.allFriends.length > 0;
+  }
+
   get availableFriends(): string[] {
+    if (this.allFriends == null) {
+      return [];
+    }
     return this.allFriends
       .filter((friend: string) => {
         const isUserFriend: boolean = this.userFriends.includes(friend);
@@ -101,7 +115,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
 
     // Get the new user object from the form
-    const newUser: User = this.formGroup.value as User;
+    const formUser: FormUser = this.formGroup.value as FormUser;
+    const newUser: User = {
+      name: formUser.name,
+      age: formUser.age,
+      weight: formUser.weight,
+      friends: this.userFriends
+    };
 
     // Emit the new user
     this.userSaved.emit(newUser);
@@ -133,6 +153,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   resetForm(evt?: Event): void {
+    this.userFriends = [];
     this.formElem.resetForm();
     this.formGroup.markAsUntouched();
     const hasEvent: boolean = !!evt;
@@ -186,7 +207,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
           Validators.maxLength(3)
         ])
       ],
-      friendInput: ['']
+      friendInput: [{ value: '', 'disabled': !this.friendsExist }]
     };
     return formBuilderConfig;
   }

@@ -4,6 +4,7 @@
 
 <app-user-form
   #userForm
+  [allFriends]="allFriends | async"
   (userSaved)="onUserSaved($event)">
 </app-user-form>
 
