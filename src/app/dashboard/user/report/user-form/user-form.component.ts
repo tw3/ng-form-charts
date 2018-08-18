@@ -1,6 +1,8 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { Observable, Subscription } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 import { FormState } from '../../../../shared/enums/form-state.enum';
 import { NotificationService } from '../../../../shared/notification.service';
@@ -16,7 +18,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
   isFormValid: boolean;
 
+  friendInputControl: AbstractControl;
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  fruits: string[] = ['Lemon'];
+  fruitAutocompleteOptions: Observable<string[]>;
+
   @ViewChild('formElem') formElem: HTMLFormElement;
+  @ViewChild('fruitInput') fruitInput: ElementRef;
 
   private formState: FormState;
   private valueChangeSub: Subscription;
@@ -25,6 +33,32 @@ export class UserFormComponent implements OnInit, OnDestroy {
   constructor(private formBuilder: FormBuilder,
               private notificationService: NotificationService) {
   }
+
+  get isReady(): boolean {
+    return this.formState === FormState.READY;
+  }
+
+  get isSaving(): boolean {
+    return this.formState === FormState.SAVING;
+  }
+
+  get isSaved(): boolean {
+    return this.formState === FormState.SAVED;
+  }
+
+  get isError(): boolean {
+    return this.formState === FormState.ERROR;
+  }
+
+  get availableFruits(): string[] {
+    return this.allFruits
+      .filter((fruit: string) => {
+        const isNotAlreadyChosen: boolean = !this.fruits.includes(fruit);
+        console.log('fruit', fruit, ' isNotAlreadyChosen', isNotAlreadyChosen);
+        return isNotAlreadyChosen;
+      });
+  }
+
 
   ngOnInit(): void {
     this.formState = FormState.READY;
@@ -35,19 +69,15 @@ export class UserFormComponent implements OnInit, OnDestroy {
     this.destroyForm();
   }
 
-  get isReady(): boolean { return this.formState === FormState.READY; }
-  get isSaving(): boolean { return this.formState === FormState.SAVING; }
-  get isSaved(): boolean { return this.formState === FormState.SAVED; }
-  get isError(): boolean { return this.formState === FormState.ERROR; }
-
   addRandomUserData(): void {
     this.formGroup.patchValue({
       name: this.stringGen(),
-      friends: this.stringGen(),
       age: this.getRandomInt(1, 100),
-      weight: this.getRandomInt(8, 400)
+      weight: this.getRandomInt(8, 400),
+      friendInput: ''
     });
-    this.save();
+    // TODO: Update this.friends
+    // this.save();
   }
 
   save(): void {
@@ -93,9 +123,51 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.fruits.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.friendInputControl.setValue(null);
+  }
+
+  remove(fruit: string): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.friendInputControl.setValue(null);
+  }
+
   private buildForm(): void {
     const formBuildConfig: AnyHash = this.getFormBuilderConfig();
     this.formGroup = this.formBuilder.group(formBuildConfig);
+    this.friendInputControl = this.formGroup.controls['friendInput'];
+    this.fruitAutocompleteOptions = this.friendInputControl.valueChanges.pipe(
+      startWith(null),
+      map((friendInputText: string | null) => {
+        const result = friendInputText ?
+          this._filterFruits(friendInputText) :
+          this.availableFruits.slice();
+        console.log('result', result);
+        return result;
+      })
+    );
     this.valueChangeSub = this.formGroup.valueChanges
       .subscribe(this.onFormGroupValueChanged.bind(this));
     this.statusChangeSub = this.formGroup.statusChanges
@@ -106,7 +178,6 @@ export class UserFormComponent implements OnInit, OnDestroy {
   private getFormBuilderConfig(): AnyHash {
     const formBuilderConfig: AnyHash = {
       name: ['', [Validators.required]],
-      friends: ['', [Validators.required]],
       age: ['',
         Validators.compose([
           Validators.required,
@@ -120,11 +191,21 @@ export class UserFormComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.min(0),
           Validators.pattern('\^[0-9]+$'),
-          Validators.maxLength(3),
+          Validators.maxLength(3)
         ])
       ],
+      friendInput: ['']
     };
     return formBuilderConfig;
+  }
+
+  private _filterFruits(inputText: string): string[] {
+    inputText = inputText.toLowerCase();
+    return this.availableFruits
+      .filter((fruit: string) => {
+        const isOptionMatch: boolean = (fruit.toLowerCase().indexOf(inputText) === 0);
+        return isOptionMatch;
+      });
   }
 
   private onFormGroupValueChanged(): void {
