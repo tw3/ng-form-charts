@@ -4,10 +4,10 @@ import { chartColorScheme } from '../chart-color-scheme';
 
 @Component({
   selector: 'app-bubble-chart',
-  templateUrl: './bubble-chart.component.html',
-  styleUrls: ['./bubble-chart.component.css']
+  templateUrl: './bubble-chart-card.component.html',
+  styleUrls: ['./bubble-chart-card.component.css']
 })
-export class BubbleChartComponent {
+export class BubbleChartCardComponent {
   @Input() title: string;
   @Input() xAxisLabel: string;
   @Input() yAxisLabel: string;

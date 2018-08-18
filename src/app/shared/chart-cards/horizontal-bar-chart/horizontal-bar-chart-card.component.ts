@@ -4,10 +4,10 @@ import { chartColorScheme } from '../chart-color-scheme';
 
 @Component({
   selector: 'app-horizontal-bar-chart',
-  templateUrl: './horizontal-bar-chart.component.html',
-  styleUrls: ['./horizontal-bar-chart.component.css']
+  templateUrl: './horizontal-bar-chart-card.component.html',
+  styleUrls: ['./horizontal-bar-chart-card.component.css']
 })
-export class HorizontalBarChartComponent {
+export class HorizontalBarChartCardComponent {
   @Input() title: string;
   @Input() xAxisLabel: string;
   @Input() yAxisLabel: string;

@@ -14,6 +14,9 @@ import { DashboardComponent } from './dashboard.component';
     DashboardRoutingModule,
     FlexLayoutModule
   ],
-  declarations: [DashboardComponent]
+  declarations: [
+    DashboardComponent
+  ]
 })
-export class DashboardModule { }
+export class DashboardModule {
+}
