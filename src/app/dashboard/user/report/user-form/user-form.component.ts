@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -13,18 +13,18 @@ import { NotificationService } from '../../../../shared/notification.service';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit, OnDestroy {
+  allFriends: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  userFriends: string[] = ['Lemon'];
   @Output() userSaved: EventEmitter<User> = new EventEmitter<User>();
 
   formGroup: FormGroup;
   isFormValid: boolean;
 
   friendInputControl: AbstractControl;
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
-  fruits: string[] = ['Lemon'];
-  fruitAutocompleteOptions: Observable<string[]>;
+  friendAutocompleteOptions: Observable<string[]>;
 
   @ViewChild('formElem') formElem: HTMLFormElement;
-  @ViewChild('fruitInput') fruitInput: ElementRef;
+  @ViewChild('friendInput') friendInputElem: ElementRef;
 
   private formState: FormState;
   private valueChangeSub: Subscription;
@@ -50,12 +50,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
     return this.formState === FormState.ERROR;
   }
 
-  get availableFruits(): string[] {
-    return this.allFruits
-      .filter((fruit: string) => {
-        const isNotAlreadyChosen: boolean = !this.fruits.includes(fruit);
-        console.log('fruit', fruit, ' isNotAlreadyChosen', isNotAlreadyChosen);
-        return isNotAlreadyChosen;
+  get availableFriends(): string[] {
+    return this.allFriends
+      .filter((friend: string) => {
+        const isUserFriend: boolean = this.userFriends.includes(friend);
+        return !isUserFriend;
       });
   }
 
@@ -123,34 +122,19 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  add(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.fruits.push(value.trim());
-    }
-
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
-
-    this.friendInputControl.setValue(null);
-  }
-
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
-
-    if (index >= 0) {
-      this.fruits.splice(index, 1);
+  removeUserFriend(userFriend: string): void {
+    const userFriendIndex: number = this.userFriends.indexOf(userFriend);
+    if (userFriendIndex >= 0) {
+      this.userFriends.splice(userFriendIndex, 1);
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
+  onFriendOptionSelected(event: MatAutocompleteSelectedEvent): void {
+    // add friend to userFriends
+    const friend: string = event.option.viewValue;
+    this.userFriends.push(friend);
+    // reset state
+    this.friendInputElem.nativeElement.value = '';
     this.friendInputControl.setValue(null);
   }
 
@@ -158,12 +142,12 @@ export class UserFormComponent implements OnInit, OnDestroy {
     const formBuildConfig: AnyHash = this.getFormBuilderConfig();
     this.formGroup = this.formBuilder.group(formBuildConfig);
     this.friendInputControl = this.formGroup.controls['friendInput'];
-    this.fruitAutocompleteOptions = this.friendInputControl.valueChanges.pipe(
+    this.friendAutocompleteOptions = this.friendInputControl.valueChanges.pipe(
       startWith(null),
       map((friendInputText: string | null) => {
         const result = friendInputText ?
-          this._filterFruits(friendInputText) :
-          this.availableFruits.slice();
+          this.getMatchingAvailableFriends(friendInputText) :
+          this.availableFriends.slice();
         console.log('result', result);
         return result;
       })
@@ -199,11 +183,11 @@ export class UserFormComponent implements OnInit, OnDestroy {
     return formBuilderConfig;
   }
 
-  private _filterFruits(inputText: string): string[] {
+  private getMatchingAvailableFriends(inputText: string): string[] {
     inputText = inputText.toLowerCase();
-    return this.availableFruits
-      .filter((fruit: string) => {
-        const isOptionMatch: boolean = (fruit.toLowerCase().indexOf(inputText) === 0);
+    return this.availableFriends
+      .filter((availableFriend: string) => {
+        const isOptionMatch: boolean = (availableFriend.toLowerCase().indexOf(inputText) === 0);
         return isOptionMatch;
       });
   }
