@@ -13,7 +13,7 @@ export class UserReportService {
 
   addUser(newUser: User): Observable<void> {
     return new Observable<void>((observer) => {
-      // this is where you'd normally have an httpClient.get() call, this timeout simulates it
+      // This is where you'd normally have an httpClient.get() call, this timeout simulates it
       window.setTimeout(() => {
         const isDuplicate: boolean = this.isDuplicateUser(newUser);
         if (isDuplicate) {
@@ -29,12 +29,12 @@ export class UserReportService {
     });
   }
 
-  // if this was a real app you'd have the other CRUD operations here
+  // If this was a real app you'd have the other CRUD operations here
   // i.e. deleteUser(id), editUser(id), etc
 
   getUsers(): Observable<User[]> {
     return new Observable<User[]>((observer) => {
-      // this is where you'd normally have an httpClient.get() call, this timeout simulates it
+      // This is where you'd normally have an httpClient.get() call, this timeout simulates it
       window.setTimeout(() => {
         observer.next(this.users);
         observer.complete();

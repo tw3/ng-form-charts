@@ -13,7 +13,7 @@ export class HorizontalBarChartCardComponent {
   @Input() yAxisLabel: string;
   @Input() results: HorizontalBarChartDataPoint[];
 
-  // options
+  // Options
   showXAxis = true;
   showYAxis = true;
   gradient = false;

@@ -29,13 +29,13 @@ export class UserReportComponent {
 
   get hasAgeWeightResults(): boolean {
     return !!this.ageWeightResults && this.ageWeightResults.length > 0;
-}
+  }
 
   onUserSaved(newUser: User): void {
-    // let the form know we are saving
+    // Let the form know we are saving
     this.userForm.setFormState(FormState.SAVING);
 
-    // add the user
+    // Add the user
     this.userReportService.addUser(newUser)
       .subscribe(
         this.handleAddUserSuccess.bind(this),
@@ -44,10 +44,10 @@ export class UserReportComponent {
   }
 
   private handleAddUserSuccess(): void {
-    // let the form know the user is saved
+    // Let the form know the user is saved
     this.userForm.setFormState(FormState.SAVED);
 
-    // get all of the users
+    // Get all of the users
     this.userReportService.getUsers()
       .subscribe(
         this.handleGetUsersSuccess.bind(this),
@@ -56,13 +56,13 @@ export class UserReportComponent {
   }
 
   private handleAddUserError(error: Error): void {
-    // let the form of the error
+    // Let the form of the error
     const errorMessage: string = error.message;
     this.userForm.setFormState(FormState.ERROR, errorMessage);
   }
 
   private handleGetUsersSuccess(users: User[]): void {
-    // convert users into results
+    // Convert users into results
     this.userAgeResults = [];
     this.userWeightResults = [];
     this.ageWeightResults = [];
@@ -91,7 +91,7 @@ export class UserReportComponent {
   }
 
   private handleGetUsersError(error: Error): void {
-    // let the form of the error
+    // Let the form of the error
     const errorMessage: string = error.message;
     this.userForm.setFormState(FormState.ERROR, errorMessage);
   }

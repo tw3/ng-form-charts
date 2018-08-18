@@ -10,16 +10,6 @@ const routes: Routes = [
     pathMatch: 'full',
     component: DashboardComponent
   },
-  // {
-  //   path: 'login',
-  //   pathMatch: 'full',
-  //   loadChildren: 'app/login/login.module#LoginModule'
-  // },
-  // {
-  //   path: 'logout',
-  //   pathMatch: 'full',
-  //   loadChildren: 'app/logout/logout.module#LogoutModule'
-  // },
   {
     path: '**',
     pathMatch: 'full',

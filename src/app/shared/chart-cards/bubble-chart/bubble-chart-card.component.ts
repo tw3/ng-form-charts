@@ -13,7 +13,7 @@ export class BubbleChartCardComponent {
   @Input() yAxisLabel: string;
   @Input() results: BubbleChartDataPoint[];
 
-  // options
+  // Options
   showXAxis = true;
   showYAxis = true;
   showLegend = true;
