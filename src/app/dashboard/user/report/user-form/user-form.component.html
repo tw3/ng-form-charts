@@ -60,32 +60,34 @@
               <div class="col-xs-12">
 
                 <mat-form-field color="accent">
-                  <mat-chip-list #userFriendsChipList>
-                    <!-- chips for user friends -->
+                  <mat-chip-list #userFriendNamesChipList>
+                    <!-- chips for user friend names -->
                     <mat-chip
-                      *ngFor="let userFriend of userFriends"
-                      (removed)="removeUserFriend(userFriend)">
-                      {{ userFriend }}
+                      *ngFor="let userFriendName of userFriendNames"
+                      (removed)="removeUserFriend(userFriendName)">
+                      {{ userFriendName }}
                       <mat-icon matChipRemove>
                         cancel
                       </mat-icon>
                     </mat-chip>
-                    <!-- text input for friends -->
+                    <!-- text input for new friend name -->
                     <input
-                      #friendInput
+                      #friendNameInput
+                      formControlName="friendNameInput"
                       matInput
-                      formControlName="friendInput"
-                      placeholder="Friends"
+                      [matAutocomplete]="availableFriendNamesAutocomplete"
+                      [matChipInputFor]="userFriendNamesChipList"
                       matChipInputAddOnBlur="false"
-                      [matAutocomplete]="availableFriendsAutocomplete"
-                      [matChipInputFor]="userFriendsChipList">
+                      placeholder="Friends"/>
                   </mat-chip-list>
-                  <!-- autocomplete dropdown for available friends -->
-                  <mat-autocomplete #availableFriendsAutocomplete="matAutocomplete"
+                  <!-- autocomplete dropdown for available friend names -->
+                  <mat-autocomplete
+                    #availableFriendNamesAutocomplete="matAutocomplete"
                     (optionSelected)="onAvailableFriendSelected($event)">
-                    <mat-option *ngFor="let friendOption of friendAutocompleteOptions | async"
-                      [value]="friendOption">
-                      {{ friendOption }}
+                    <mat-option
+                      *ngFor="let friendNameOption of friendNameAutocompleteOptions"
+                      [value]="friendNameOption">
+                      {{ friendNameOption }}
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>

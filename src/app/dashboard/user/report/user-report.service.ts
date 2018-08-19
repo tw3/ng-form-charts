@@ -24,14 +24,13 @@ export class UserReportService {
         }
         // Add new user to list of users
         this.users.push(newUser);
-        // Add new user to the friends list for his friends
+        // Add new user's name to the friendNames for his friends
         // This of course assumes that friendships are always bi-directional
         // which is not always the case in reality haha
-        newUser.friends.forEach((userFriend: string) => {
+        newUser.friendNames.forEach((userFriend: string) => {
           const friendUser: User = this.getUserByName(userFriend);
-          friendUser.friends.push(newUser.name);
+          friendUser.friendNames.push(newUser.name);
         });
-        debugger;
         // Trigger next() and complete()
         observer.next();
         observer.complete();

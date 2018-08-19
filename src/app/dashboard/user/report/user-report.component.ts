@@ -1,21 +1,23 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 import { FormState } from '../../../shared/enums/form-state.enum';
 
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserReportService } from './user-report.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-report',
   templateUrl: './user-report.component.html',
   styleUrls: ['./user-report.component.css']
 })
-export class UserReportComponent {
+export class UserReportComponent implements OnInit {
   @ViewChild('userForm') userForm: UserFormComponent;
   userAgeResults: HorizontalBarChartDataPoint[];
   userWeightResults: HorizontalBarChartDataPoint[];
   ageWeightResults: BubbleChartDataPoint[];
+
+  allFriendNames: string[];
 
   constructor(private userReportService: UserReportService) {
   }
@@ -32,9 +34,22 @@ export class UserReportComponent {
     return !!this.ageWeightResults && this.ageWeightResults.length > 0;
   }
 
-  get allFriends(): Observable<User[]> {
-    return this.userReportService.getUsers();
+  ngOnInit(): void {
+    // Let the form know we are loading
+    this.userForm.setFormState(FormState.LOADING);
+    this.userReportService.getUsers()
+      .pipe(
+        map((users: User[]) => users.map((user: User) => user.name))
+      )
+      .subscribe((names: string[]) => {
+        this.allFriendNames = names;
+        this.userForm.setFormState(FormState.READY);
+      });
   }
+
+  // get allFriendNames(): Observable<User[]> {
+  //   return this.userReportService.getUsers();
+  // }
 
   onUserSaved(newUser: User): void {
     // Let the form know we are saving
@@ -67,6 +82,8 @@ export class UserReportComponent {
   }
 
   private handleGetUsersSuccess(users: User[]): void {
+    // Update allFriendNames
+    this.allFriendNames = users.map((user: User) => user.name);
     // Convert users into results
     this.userAgeResults = [];
     this.userWeightResults = [];
@@ -80,14 +97,14 @@ export class UserReportComponent {
         name: user.name,
         value: user.weight
       });
-      // TODO: Set the radius as the number of friends
       this.ageWeightResults.push({
         name: user.name,
         series: [
           {
             name: '',
             x: user.age,
-            y: user.weight
+            y: user.weight,
+            r: user.friendNames.length
           }
         ]
       });
