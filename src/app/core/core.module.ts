@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AppAnimationModule } from './animation/app-animation.module';
-import { throwIfAlreadyLoaded } from './guards/module-import-guard';
+import { throwIfAlreadyLoaded2 } from './guards/module-import-guard';
 import { AppMaterialModule } from './material/app-material.module';
 import { NoContentComponent } from './no-content/no-content.component';
 
@@ -29,6 +29,6 @@ import { NoContentComponent } from './no-content/no-content.component';
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule?: CoreModule) {
-    throwIfAlreadyLoaded(parentModule, 'CoreModule');
+    throwIfAlreadyLoaded2(parentModule, 'CoreModule');
   }
 }
