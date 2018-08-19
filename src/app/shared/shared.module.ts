@@ -7,6 +7,7 @@ import { AppMaterialModule } from '../core/material/app-material.module';
 import { BubbleChartCardComponent } from './chart-cards/bubble-chart/bubble-chart-card.component';
 import { ForceDirectedGraphCardComponent } from './chart-cards/force-directed-graph-chart/force-directed-graph-card.component';
 import { HorizontalBarChartCardComponent } from './chart-cards/horizontal-bar-chart/horizontal-bar-chart-card.component';
+import { NoContentComponent } from './no-content/no-content.component';
 
 @NgModule({
   imports: [
@@ -15,11 +16,13 @@ import { HorizontalBarChartCardComponent } from './chart-cards/horizontal-bar-ch
     NgxChartsModule
   ],
   declarations: [
+    NoContentComponent,
     HorizontalBarChartCardComponent,
     BubbleChartCardComponent,
     ForceDirectedGraphCardComponent
   ],
   exports: [
+    NoContentComponent,
     HorizontalBarChartCardComponent,
     BubbleChartCardComponent,
     ForceDirectedGraphCardComponent

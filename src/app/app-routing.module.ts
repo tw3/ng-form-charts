@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NoContentComponent } from './core/no-content/no-content.component';
+import { NoContentComponent } from './shared/no-content/no-content.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [

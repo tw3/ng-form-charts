@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppAnimationModule } from './animation/app-animation.module';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AppMaterialModule } from './material/app-material.module';
-import { NoContentComponent } from './no-content/no-content.component';
 
 @NgModule({
   imports: [
@@ -18,12 +17,6 @@ import { NoContentComponent } from './no-content/no-content.component';
     ReactiveFormsModule,
     AppAnimationModule,
     AppMaterialModule
-  ],
-  declarations: [
-    NoContentComponent
-  ],
-  exports: [
-    NoContentComponent
   ],
   providers: []
 })
