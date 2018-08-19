@@ -1,3 +1,5 @@
+import { HorizontalBarChartDataPoint } from '../../../shared/chart-cards/horizontal-bar-chart/horizontal-bar-chart-data-point.model';
+
 export let dummyResults: HorizontalBarChartDataPoint[] = [
   {
     'name': 'Paige',

@@ -15,8 +15,10 @@ import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 import { FormState } from '../../../../shared/enums/form-state.enum';
+import { AnyHash } from '../../../../shared/models/AnyHash.model';
 import { NotificationService } from '../../../../shared/notification.service';
 import { getRandomArraySubset, getRandomInt, stringGen } from '../../../../shared/util/random_util_functions';
+import { User } from '../../shared/models/user.model';
 
 interface FormUser {
   name: string;

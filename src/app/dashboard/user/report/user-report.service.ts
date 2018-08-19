@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { User } from '../shared/models/user.model';
+
 @Injectable({
   providedIn: 'root'
 })

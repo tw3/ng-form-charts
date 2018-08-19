@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 
 import { chartColorScheme } from '../chart-color-scheme';
 
+import { BubbleChartDataPoint } from './bubble-chart-data-point.model';
+
 @Component({
   selector: 'app-bubble-chart',
   templateUrl: './bubble-chart-card.component.html',

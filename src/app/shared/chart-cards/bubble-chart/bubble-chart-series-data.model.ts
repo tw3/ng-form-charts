@@ -1,4 +1,4 @@
-interface BubbleChartSeriesDataItem {
+export interface BubbleChartSeriesDataItem {
   name: string;
   x: number;
   y: number;

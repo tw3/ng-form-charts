@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 
 import { chartColorScheme } from '../chart-color-scheme';
 
+import { HorizontalBarChartDataPoint } from './horizontal-bar-chart-data-point.model';
+
 @Component({
   selector: 'app-horizontal-bar-chart',
   templateUrl: './horizontal-bar-chart-card.component.html',

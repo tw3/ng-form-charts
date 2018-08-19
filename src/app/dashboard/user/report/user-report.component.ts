@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { map } from 'rxjs/operators';
 
+import { BubbleChartDataPoint } from '../../../shared/chart-cards/bubble-chart/bubble-chart-data-point.model';
+import { HorizontalBarChartDataPoint } from '../../../shared/chart-cards/horizontal-bar-chart/horizontal-bar-chart-data-point.model';
 import { FormState } from '../../../shared/enums/form-state.enum';
+import { User } from '../shared/models/user.model';
 
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserReportService } from './user-report.service';

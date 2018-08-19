@@ -1,4 +1,4 @@
-interface HorizontalBarChartDataPoint {
+export interface HorizontalBarChartDataPoint {
   name: string;
   value: number;
 }

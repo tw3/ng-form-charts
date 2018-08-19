@@ -28,6 +28,26 @@
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel">
+            <ng-template #tooltipTemplate
+              let-model="model">
+              <span class="tooltip-label">
+                {{ model.series }}
+              </span>
+              <span class="tooltip-label">
+                <label>
+                  Age:
+                </label>
+                {{ model.x }}
+                <br>
+                <label>
+                  Weight:
+                </label>
+                {{ model.value }}
+              </span>
+              <span class="tooltip-val">
+                {{ model.radius }} friends
+              </span>
+            </ng-template>
           </ngx-charts-bubble-chart>
 
         </div>

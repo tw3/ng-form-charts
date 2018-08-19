@@ -1,3 +1,3 @@
-interface AnyHash {
+export interface AnyHash {
   [key: string]: any;
 }
