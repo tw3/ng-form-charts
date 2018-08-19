@@ -28,7 +28,8 @@
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel">
-            <ng-template #tooltipTemplate
+            <ng-template
+              #tooltipTemplate
               let-model="model">
               <span class="tooltip-label">
                 {{ model.series }}
@@ -38,7 +39,7 @@
                   Age:
                 </label>
                 {{ model.x }}
-                <br>
+                <br/>
                 <label>
                   Weight:
                 </label>

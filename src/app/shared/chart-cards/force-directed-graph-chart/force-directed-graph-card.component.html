@@ -18,12 +18,12 @@
         <div class="chart-container">
 
           <ngx-charts-force-directed-graph
-            class="chart-container"
             [legend]="showLegend"
             [links]="graph.links"
             [animations]="animations"
             [nodes]="graph.nodes"
-            [scheme]="colorScheme">
+            [scheme]="colorScheme"
+            class="chart-container">
           </ngx-charts-force-directed-graph>
 
         </div>
