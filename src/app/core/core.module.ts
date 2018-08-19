@@ -17,7 +17,7 @@ import { NoContentComponent } from './no-content/no-content.component';
     RouterModule,
     ReactiveFormsModule,
     AppAnimationModule,
-    AppMaterialModule,
+    AppMaterialModule
   ],
   declarations: [
     NoContentComponent
@@ -25,11 +25,10 @@ import { NoContentComponent } from './no-content/no-content.component';
   exports: [
     NoContentComponent
   ],
-  providers: [
-  ]
+  providers: []
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-    throwIfAlreadyLoaded(parentModule, 'CoreModule');
+  constructor(@Optional() @SkipSelf() parentModule?: CoreModule) {
+    throwIfAlreadyLoaded(parentModule,  'CoreModule');
   }
 }
