@@ -1,3 +1,4 @@
+/* tslint:disable:typedef */
 export const getRandomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -20,7 +21,7 @@ export const stringGen = (): string => {
 };
 
 export const getRandomArraySubset = (array: any[]): any[] => {
-  const numItems = getRandomInt(0, array.length);
+  const numItems: number = getRandomInt(0, array.length);
   const shuffledArray: any[] = shuffleArray(array);
   const arraySubset: any[] = shuffledArray.slice(0, numItems);
   return arraySubset;

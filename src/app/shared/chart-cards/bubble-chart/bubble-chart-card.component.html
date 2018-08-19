@@ -27,8 +27,7 @@
             [showXAxisLabel]="showXAxisLabel"
             [showYAxisLabel]="showYAxisLabel"
             [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            tooltipTemplate="tooltipTemplate">
+            [yAxisLabel]="yAxisLabel">
           </ngx-charts-bubble-chart>
 
         </div>
@@ -41,13 +40,3 @@
   </div>
 </div>
 
-<ng-template
-  #tooltipTemplate
-  let-model="model">
-  <h1>
-    Title
-  </h1>
-  <h2>
-    {{model.x }}--{{model.y}}
-  </h2>
-</ng-template>
