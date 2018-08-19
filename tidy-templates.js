@@ -17,11 +17,13 @@
  * Detect "Else" Templates
  * Prefer ng-container for empty divs
  * Mark Localizable Text (in templates) with data-i19n
+ *
+ * @author Ted Weatherly
  */
 
 const fs = require('fs');
-const glob = require("glob");
-const HtmlParser = require("htmlparser2");
+const glob = require('glob');
+const HtmlParser = require('htmlparser2');
 const DomUtils = HtmlParser.DomUtils;
 
 const CONSTANTS = {
@@ -29,10 +31,10 @@ const CONSTANTS = {
   LF: '\n',
   CRLF: '\r\n',
   ONE_WAY_BINDING_REGEX: new RegExp('^\\[([^(\\]]+)\\]$'),
-  EVENT_BINDING_REGEX:   new RegExp('^\\(([^)]+)\\)$'),
+  EVENT_BINDING_REGEX: new RegExp('^\\(([^)]+)\\)$'),
   TWO_WAY_BINDING_REGEX: new RegExp('^\\[\\(([^)\\]]+)\\)\\]$'),
-  QUOTED_STRING_REGEX:   new RegExp('^\'([^\']+)\'$'),
-  EXPRESSION_REGEX:      new RegExp('^{{([^}]+)}}$'),
+  QUOTED_STRING_REGEX: new RegExp('^\'([^\']+)\'$'),
+  EXPRESSION_REGEX: new RegExp('^{{([^}]+)}}$')
 };
 
 const opt = {
@@ -81,7 +83,7 @@ const opt = {
   newlineChars: CONSTANTS.CRLF,
   defaultDir: 'src/app',
   fileGlob: '*.component.html',
-  debugFlag: false,
+  debugFlag: false
 };
 
 function init() {
@@ -149,7 +151,7 @@ function cleanFile(fileName) {
         fs.writeFile(fileName, newHtml, (err) => {
           if (err) throw err;
           console.log('Updated', fileName);
-        })
+        });
       }
     });
   });
@@ -185,7 +187,7 @@ function cleanHtml(inputHtml, callback) {
 function getNodeArrayHtml(nodes, indentLevel = 0) {
   let html = '';
 
-  nodes.forEach(function (node) {
+  nodes.forEach(function(node) {
     if (node.type === 'root') {
       html += getNodeArrayHtml(node.children, indentLevel + 1);
       return;
@@ -229,7 +231,7 @@ function getTagHtml(node, indentLevel) {
       const childNode = node.children[0];
       const isChildTextNode = (childNode.type === 'text');
       if (isChildTextNode) {
-        const isChildNodeEmpty = (childNode.data.trim() === "");
+        const isChildNodeEmpty = (childNode.data.trim() === '');
         if (isChildNodeEmpty) {
           hasChildren = false;
         }
@@ -287,7 +289,7 @@ function getTagAttributesHtml(node, indentLevel) {
     // Add attribute name
     result += prefix + tagAttributeData.name;
     // Add attribute value (possibly)
-    const isAttributeValueEmpty = (tagAttributeData.value === "");
+    const isAttributeValueEmpty = (tagAttributeData.value === '');
     const shouldAddAttributeValue = !isAttributeValueEmpty ||
       opt.attribute.emptyValueNames.indexOf(tagAttributeData.name) >= 0;
     if (shouldAddAttributeValue) {
@@ -314,7 +316,7 @@ function getNodeText(node, indentLevel) {
 
   // Get trimmed text
   let trimText = text.trim();
-  const isEmpty = (trimText === "");
+  const isEmpty = (trimText === '');
   if (!isEmpty) {
     const indent = getIndent(indentLevel);
     trimText = `${indent}${trimText}${opt.newlineChars}`;
@@ -417,7 +419,7 @@ function getOrderRegexMatchIndex(attributeName) {
     const regex = (item instanceof RegExp) ? item : new RegExp(item);
     const isMatch = regex.test(attributeName);
     return isMatch;
-  })
+  });
 }
 
 function getIndent(indentLevel) {

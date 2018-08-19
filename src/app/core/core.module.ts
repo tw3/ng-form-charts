@@ -29,6 +29,6 @@ import { NoContentComponent } from './no-content/no-content.component';
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule?: CoreModule) {
-    throwIfAlreadyLoaded(parentModule,  'CoreModule');
+    throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 }
