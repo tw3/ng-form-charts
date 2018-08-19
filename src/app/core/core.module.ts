@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AppAnimationModule } from './animation/app-animation.module';
-import { throwIfAlreadyLoaded } from './guard/module-import-guard';
+import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AppMaterialModule } from './material/app-material.module';
 import { NoContentComponent } from './no-content/no-content.component';
 
