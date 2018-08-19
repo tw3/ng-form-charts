@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { BubbleChartDataPoint } from '../../../shared/chart-cards/bubble-chart/bubble-chart-data-point.model';
+import { ForceDirectedGraph } from '../../../shared/chart-cards/force-directed-graph-chart/force-directed-graph.model';
 import { HorizontalBarChartDataPoint } from '../../../shared/chart-cards/horizontal-bar-chart/horizontal-bar-chart-data-point.model';
 import { FormState } from '../../../shared/enums/form-state.enum';
 import { User } from '../shared/models/user.model';
@@ -19,6 +20,10 @@ export class UserReportComponent implements OnInit {
   userAgeResults: HorizontalBarChartDataPoint[];
   userWeightResults: HorizontalBarChartDataPoint[];
   ageWeightResults: BubbleChartDataPoint[];
+  friendsGraph: ForceDirectedGraph = {
+    links: [],
+    nodes: []
+  };
 
   allFriendNames: string[];
 
@@ -35,6 +40,10 @@ export class UserReportComponent implements OnInit {
 
   get hasAgeWeightResults(): boolean {
     return !!this.ageWeightResults && this.ageWeightResults.length > 0;
+  }
+
+  get hasFriendsGraph(): boolean {
+    return !!this.friendsGraph && !!this.friendsGraph.nodes && this.friendsGraph.nodes.length > 0;
   }
 
   ngOnInit(): void {
@@ -79,7 +88,7 @@ export class UserReportComponent implements OnInit {
   }
 
   private handleAddUserError(error: Error): void {
-    // Let the form of the error
+    // Let the form know of the error
     const errorMessage: string = error.message;
     this.userForm.setFormState(FormState.ERROR, errorMessage);
   }
@@ -87,6 +96,7 @@ export class UserReportComponent implements OnInit {
   private handleGetUsersSuccess(users: User[]): void {
     // Update allFriendNames
     this.allFriendNames = users.map((user: User) => user.name);
+
     // Convert users into results
     this.userAgeResults = [];
     this.userWeightResults = [];
@@ -111,12 +121,28 @@ export class UserReportComponent implements OnInit {
           }
         ]
       });
-
     });
+
+    // Get the friendGraph
+    this.userReportService.getFriendsGraph()
+      .subscribe(
+        this.handleGetFriendsGraphSuccess.bind(this),
+        this.handleGetFriendsGraphError.bind(this)
+      );
+
   }
 
   private handleGetUsersError(error: Error): void {
-    // Let the form of the error
+    // Let the form know of the error
+    const errorMessage: string = error.message;
+    this.userForm.setFormState(FormState.ERROR, errorMessage);
+  }
+
+  private handleGetFriendsGraphSuccess(friendsGraph: ForceDirectedGraph): void {
+    this.friendsGraph = friendsGraph;
+  }
+
+  private handleGetFriendsGraphError(error: Error): void {
     const errorMessage: string = error.message;
     this.userForm.setFormState(FormState.ERROR, errorMessage);
   }

@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 
 import { FormState } from '../../../../shared/enums/form-state.enum';
 import { AnyHash } from '../../../../shared/models/AnyHash.model';
-import { NotificationService } from '../../../../shared/notification.service';
+import { NotificationService } from '../../../../shared/services/notification.service';
 import { getRandomArraySubset, getRandomInt, stringGen } from '../../../../shared/util/random_util_functions';
 import { User } from '../../shared/models/user.model';
 

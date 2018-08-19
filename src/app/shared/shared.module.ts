@@ -5,7 +5,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AppMaterialModule } from '../core/material/app-material.module';
 
 import { BubbleChartCardComponent } from './chart-cards/bubble-chart/bubble-chart-card.component';
-import { ForceDirectedGraphChartComponent } from './chart-cards/force-directed-graph-chart/force-directed-graph-chart.component';
+import { ForceDirectedGraphCardComponent } from './chart-cards/force-directed-graph-chart/force-directed-graph-card.component';
 import { HorizontalBarChartCardComponent } from './chart-cards/horizontal-bar-chart/horizontal-bar-chart-card.component';
 
 @NgModule({
@@ -17,11 +17,12 @@ import { HorizontalBarChartCardComponent } from './chart-cards/horizontal-bar-ch
   declarations: [
     HorizontalBarChartCardComponent,
     BubbleChartCardComponent,
-    ForceDirectedGraphChartComponent
+    ForceDirectedGraphCardComponent
   ],
   exports: [
     HorizontalBarChartCardComponent,
-    BubbleChartCardComponent
+    BubbleChartCardComponent,
+    ForceDirectedGraphCardComponent
   ]
 })
 export class SharedModule {
