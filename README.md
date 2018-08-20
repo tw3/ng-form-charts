@@ -38,7 +38,7 @@ Run `npm test` to launch a test runner using Karma and Jasmine.
 	 - Material Autocomplete
 	 - Material Chips
 	 - Material Progress Bar
- - RxJS
+ - RxJS 6
  - NgxCharts
  - Flexboxgrid
  - Tidy Templates
