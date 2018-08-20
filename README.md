@@ -22,7 +22,7 @@ For convenience you can click the user icon in the top left of User Input card t
 
 ## Testing
 
-Unit tests and end-to-end tests have yet to be written.
+Run `npm test`
 
 ## Libraries/Frameworks Used
 
