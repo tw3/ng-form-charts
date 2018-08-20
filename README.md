@@ -22,7 +22,7 @@ For convenience you can click the user icon in the top left of User Input card t
 
 ## Testing
 
-Run `npm test`
+Run `npm test` to launch a test runner using Karma and Jasmine.
 
 ## Libraries/Frameworks Used
 
