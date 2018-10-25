@@ -16,7 +16,7 @@ To run the app locally:
 
 You can also run the app from [StackBlitz](https://stackblitz.com/github/tw3/ngx-form-charts).
 
-Once the app is loaded you will see the User Input form.  Enter in the name, age, weight, and friends for the use and click the SAVE button.  A series of charts will appear below the form that visualize the data you entered.
+Once the app is loaded you will see the User Input form.  Enter in the name, age, weight, and friends for the user and click the SAVE button.  A series of charts will appear below the form that visualize the data you entered.
 
 For convenience you can click the user icon in the top left of User Input card to save a user with a random name and random age, weight, and friends. 
 
