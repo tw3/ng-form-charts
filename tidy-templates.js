@@ -1,8 +1,5 @@
 /**
- * This node js script scans through the input component template files and tidy's them according to our guidelines.
- *
- * https://jobs2careers.atlassian.net/wiki/spaces/EN/pages/122224724/Angular+Guidelines
- * https://jobs2careers.atlassian.net/wiki/spaces/ODT/pages/153354241/ODT+UI+Best+Practices
+ * This node js script scans through the input component template files and tidy's them according to a certain guideline.
  *
  * Sample shell command:
  * node tidy-templates.js src/app
